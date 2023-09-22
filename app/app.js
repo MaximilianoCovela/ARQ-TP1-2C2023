@@ -1,6 +1,7 @@
 import express from 'express';
 import { nanoid } from 'nanoid';
 import axios from 'axios';
+import { spaceflightNewsConfig } from './config.js';
 
 const app = express();
 
@@ -12,15 +13,8 @@ app.use((req, res, next) => {
 });
 
 app.get('/spaceflight_news', async (req, res) => {
-    const response = await axios.get("https://api.spaceflightnewsapi.net/v3/articles?_limit=5");
-    
-    let titles = [];
-    response.data.forEach(element => {
-        if (element.hasOwnProperty('title')) {
-            titles.push(element.title);
-        }
-    });
-
+    const response = await axios.get(`${spaceflightNewsConfig.url}?_limit=${spaceflightNewsConfig.limit}`);
+    const titles = response.data.map(({ title }) => title).filter(Boolean);
     res.status(200).send(titles);
 })
 
