@@ -6,3 +6,7 @@ export const spaceflightNewsConfig = {
 export const quoteConfig = {
     url: "https://api.quotable.io/random"
 };
+
+export const metarConfig = {
+    url: "https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&hoursBeforeNow=1"
+};
