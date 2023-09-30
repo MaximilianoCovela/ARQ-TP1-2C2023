@@ -9,6 +9,8 @@ const app = express();
 const id = nanoid();
 const port = 3000
 const STATUS_OK = 200;
+const DEFAULT_STATUS_ERROR = 500;
+const DEFAULT_ERROR_MESSAGE = "An error occurred while processing your request. Please try again later.";
 
 app.use((req, res, next) => {
     res.setHeader('X-API-Id', id);
@@ -20,41 +22,43 @@ app.get('/ping', (req, res) => {
 })
 
 app.get('/spaceflight_news', async (req, res) => {
-    const response = await axios.get(`${spaceflightNewsConfig.url}?_limit=${spaceflightNewsConfig.limit}`);
-
-    if (response.data) {
+    try {
+        const response = await axios.get(`${spaceflightNewsConfig.url}?_limit=${spaceflightNewsConfig.limit}`);
         const titles = response.data.map(({ title }) => title).filter(Boolean);
         res.status(STATUS_OK).send(titles);
-    } else {
-        res.status(response.status).send(response.statusText);
+    } catch (error) {
+        res.status(error.response ? error.response.status : DEFAULT_STATUS_ERROR).send(error.response ? error.message : DEFAULT_ERROR_MESSAGE);
     }
 })
 
 app.get('/quote', async (req, res) => {
-    const response = await axios.get(`${quoteConfig.url}`);
-
-    if (response.data) {
+    try {
+        const response = await axios.get(`${quoteConfig.url}`);
         var jsonResult = createQuoteJsonResult(response);
         res.status(STATUS_OK).send(jsonResult);
-    } else {
-        res.status(response.status).send(response.statusText);
+    } catch (error) {
+        res.status(error.response ? error.response.status : DEFAULT_STATUS_ERROR).send(error.response ? error.message : DEFAULT_ERROR_MESSAGE);
     }
 })
 
 app.get('/metar', async (req, res) => {
     const station = req.query.station;
     const parser = new XMLParser();
-    const response = await axios.get(`${metarConfig.url}&stationString=${station}`);
-    const parsed = parser.parse(response.data);
+    try {
+        const response = await axios.get(`${metarConfig.url}&stationString=${station}`);
+        const parsed = parser.parse(null);
 
-    if (parsed && parsed.response && parsed.response.data && parsed.response.data.METAR && parsed.response.data.METAR.raw_text) {
-        const rawText = parsed.response.data.METAR.raw_text;
+        if (parsed && parsed.response && parsed.response.data && parsed.response.data.METAR && parsed.response.data.METAR.raw_text) {
+            const rawText = parsed.response.data.METAR.raw_text;
 
-        decode(rawText);
+            decode(rawText);
 
-        res.status(STATUS_OK).send(`${rawText}`);
-    } else {
-        res.status(404).send(`METAR data not found for station ${station}`);
+            res.status(STATUS_OK).send(`${rawText}`);
+        } else {
+            res.status(404).send(`METAR data not found for station ${station}`);
+        }
+    } catch (error) {
+        res.status(error.response ? error.response.status : DEFAULT_STATUS_ERROR).send(error.response ? error.message : DEFAULT_ERROR_MESSAGE);
     }
 })
 
