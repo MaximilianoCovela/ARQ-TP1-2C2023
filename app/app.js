@@ -13,6 +13,7 @@ const STATUS_OK = 200;
 const DEFAULT_STATUS_ERROR = 500;
 const DEFAULT_ERROR_MESSAGE = "An error occurred while processing your request. Please try again later.";
 const metricGenerator = new MetricGenerator();
+const isCacheEnabled = process.env['IsCacheEnabled'] === 'true';
 
 app.use((req, res, next) => {
     res.setHeader('X-API-Id', id);
