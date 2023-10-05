@@ -28,11 +28,11 @@ config:
     - name: Heavy Plain
       duration: 120
       arrivalRate: 60
-    - name: Xtreme Ramp
+    - name: Extreme Ramp
       duration: 60
       arrivalRate: 60
       rampTo: 200
-    - name: Xtreme Plain
+    - name: Extreme Plain
       duration: 120
       arrivalRate: 200
 
