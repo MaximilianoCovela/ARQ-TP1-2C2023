@@ -200,6 +200,14 @@
         {
           "refId": "E",
           "target": "alias(stats.gauges.$server.codes.500, 'Internal Server Error')"
+        },
+        {
+          "refId": "F",
+          "target": "alias(stats.gauges.$server.codes.404, 'Not Found')"
+        },
+        {
+          "refId": "G",
+          "target": "alias(stats.gauges.$server.codes.403, 'Forbidden')"
         }
       ],
       "thresholds": [],

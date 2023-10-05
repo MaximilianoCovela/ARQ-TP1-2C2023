@@ -17,27 +17,27 @@ config:
     - name: Light Ramp
       duration: 60
       arrivalRate: 1 
-      rampTo: 30
+      rampTo: 3
     - name: Intermediate Plain
       duration: 120
-      arrivalRate: 30 
+      arrivalRate: 3
     - name: Heavy Ramp
       duration: 60
-      arrivalRate: 30
-      rampTo: 70
+      arrivalRate: 3
+      rampTo: 6
     - name: Heavy Plain
       duration: 120
-      arrivalRate: 70
+      arrivalRate: 6
     - name: Extreme Ramp
       duration: 120
-      arrivalRate: 70
-      rampTo: 90
+      arrivalRate: 6
+      rampTo: 30
     - name: Extreme Plain
       duration: 120
-      arrivalRate: 90
+      arrivalRate: 30
 
 scenarios:
-  - name: Quote (/)
+  - name: Quote Load Test (/)
     flow:
       - get:
           url: '/Quote'

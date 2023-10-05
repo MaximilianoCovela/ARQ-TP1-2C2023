@@ -2,6 +2,11 @@ config:
   environments:
     api:
       target: 'http://localhost:5555/api'
+      payload:
+        path: "stations.csv"
+        order: sequence
+        fields:
+          - "station"
       plugins:
         statsd:
           host: localhost
@@ -13,31 +18,31 @@ config:
   phases:
     - name: Light Plain 
       duration: 120
-      arrivalRate: 1
+      arrivalRate: 10
     - name: Light Ramp
       duration: 60
-      arrivalRate: 1 
-      rampTo: 10
+      arrivalRate: 10 
+      rampTo: 60
     - name: Intermediate Plain
       duration: 120
-      arrivalRate: 10 
+      arrivalRate: 60 
     - name: Heavy Ramp
       duration: 60
-      arrivalRate: 10
-      rampTo: 35
+      arrivalRate: 60
+      rampTo: 200
     - name: Heavy Plain
       duration: 120
-      arrivalRate: 35
+      arrivalRate: 200
     - name: Extreme Ramp
       duration: 60
-      arrivalRate: 35
-      rampTo: 75
+      arrivalRate: 200
+      rampTo: 300
     - name: Extreme Plain
       duration: 120
-      arrivalRate: 75
+      arrivalRate: 300
 
 scenarios:
-  - name: Metar (/)
+  - name: Metar Load Test (/)
     flow:
       - get:
-          url: '/Metar'
+          url: '/metar?station={{ station }}'

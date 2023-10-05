@@ -24,20 +24,20 @@ config:
     - name: Heavy Ramp
       duration: 60
       arrivalRate: 15
-      rampTo: 45
+      rampTo: 60
     - name: Heavy Plain
       duration: 120
-      arrivalRate: 45
-    - name: Extreme Ramp
+      arrivalRate: 60
+    - name: Xtreme Ramp
       duration: 60
-      arrivalRate: 45
-      rampTo: 100
-    - name: Extreme Plain
+      arrivalRate: 60
+      rampTo: 200
+    - name: Xtreme Plain
       duration: 120
-      arrivalRate: 100
+      arrivalRate: 200
 
 scenarios:
-  - name: SpaceFlight (/)
+  - name: SpaceFlight Load Test (/)
     flow:
       - get:
-          url: '/SpaceFlight'
+          url: '/spaceflight_news'
