@@ -124,12 +124,9 @@ app.get('/metar', async (req, res) => {
             res.status(404).send(`METAR data not found for station ${station}`);
         } else{
             const parsed = parser.parse(response.data);
-            let rawText;
-            if (parsed.response.data.METAR[0] !== null) {
-                rawText = parsed.response.data.METAR[0].raw_text;
-            } else {
-                rawText = parsed.response.data.METAR.raw_text;
-            }
+            const metar = parsed.response.data.METAR;
+            const lenght = Array.isArray(metar) ? metar.length : 1;
+            const rawText = lenght > 1 ? metar[0].raw_text : metar.raw_text;
             decode(rawText);
 
             res.status(STATUS_OK).send(`${rawText}`);
