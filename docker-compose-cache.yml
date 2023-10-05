@@ -5,6 +5,8 @@ services:
         build: ./app
         links:
             - redis
+        environment:
+            - IsCacheEnabled=true
 
     nginx:
         image: nginx:1.25.2

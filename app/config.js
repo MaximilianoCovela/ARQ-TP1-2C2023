@@ -3,6 +3,10 @@ export const spaceflightNewsConfig = {
     limit: 5
 };
 
+export const multipleQuotesConfig = {
+    url: "https://api.quotable.io/quotes/random"
+};
+
 export const quoteConfig = {
     url: "https://api.quotable.io/random"
 };

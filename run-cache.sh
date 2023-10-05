@@ -1,5 +1,4 @@
-alias docc='docker compose -f docker-compose-cache.yml' # Se puede necesitar cambiarlo a 'docker-compose -f docker-compose-cache.yml' según cómo esté instalado.
+shopt -s expand_aliases
+alias docc='sudo docker compose -f docker-compose-cache.yml'
 
-export IsCacheEnabled=true
-
-docc --compatibility up -d
+docc --compatibility up -d --build
