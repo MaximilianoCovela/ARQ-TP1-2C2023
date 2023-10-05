@@ -196,6 +196,10 @@
         {
           "refId": "D",
           "target": "alias(stats.gauges.$server.codes.429, 'Limited')"
+        },
+        {
+          "refId": "E",
+          "target": "alias(stats.gauges.$server.codes.500, 'Internal Server Error')"
         }
       ],
       "thresholds": [],
