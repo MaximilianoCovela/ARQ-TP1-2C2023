@@ -1,0 +1,36 @@
+config:
+  environments:
+    api:
+      target: 'http://localhost:5555/api'
+      plugins:
+        statsd:
+          host: localhost
+          port: 8125
+          prefix: "artillery-api"
+
+  pool: 50 # All HTTP requests from all virtual users will be sent over the same connections
+
+  phases:
+    - name: Light Plain 
+      duration: 120
+      arrivalRate: 1
+    - name: Light Ramp
+      duration: 60
+      arrivalRate: 1 
+      rampTo: 20
+    - name: Intermediate Plain
+      duration: 120
+      arrivalRate: 20 
+    - name: Heavy Ramp
+      duration: 60
+      arrivalRate: 20
+      rampTo: 150
+    - name: Heavy Plain
+      duration: 120
+      arrivalRate: 150    
+
+scenarios:
+  - name: Ping Load Test (/)
+    flow:
+      - get:
+          url: '/ping'
