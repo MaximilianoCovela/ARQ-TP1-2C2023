@@ -30,7 +30,7 @@ config:
       arrivalRate: 150    
 
 scenarios:
-  - name: Ping Load Test (/)
+  - name: Ping (/)
     flow:
       - get:
           url: '/ping'
