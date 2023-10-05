@@ -50,11 +50,11 @@ app.get('/spaceflight_news', async (req, res) => {
         const response = await axios.get(`${spaceflightNewsConfig.url}?_limit=${spaceflightNewsConfig.limit}`);
         const externalApiEndTime = Date.now();
         metricGenerator.responseTimeMetric(externalApiStartTime, externalApiEndTime);
-        const titles = response.data.map(({ title }) => title).filter(Boolean);
+        titles = response.data.map(({ title }) => title).filter(Boolean);
         res.status(STATUS_OK).send(titles);
         if (isCacheEnabled){
             await redisClient.set('space_news', JSON.stringify(titles), {
-                EX: 5
+                EX: 15
             });
         }
     } catch (error){
@@ -81,7 +81,7 @@ app.get('/quote', async (req, res) => {
         let response;
         const externalApiStartTime = Date.now();
         if (isCacheEnabled){
-            response = await axios.get(`${multipleQuotesConfig.url}?limit=10`);
+            response = await axios.get(`${multipleQuotesConfig.url}?limit=50`);
             response.data.forEach(element => {
                 console.log(element);
                 redisClient.SADD('quotes', JSON.stringify(element));
